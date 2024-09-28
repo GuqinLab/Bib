@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://ccjktype.fonts.adobe.com/2014/03/ids-opentype.html -->
+<html lang="en-US" class=" wf-adobe-clean-han-japanese-n9-active wf-adobe-clean-han-japanese-n5-active wf-adobe-clean-han-japanese-n7-active wf-adobe-clean-han-japanese-n1-active wf-adobe-clean-han-japanese-n2-active wf-adobe-clean-han-japanese-n3-active wf-adobe-clean-han-japanese-n4-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="serp-content-type" content="blog">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDS + OpenType: Pseudo-encoding Unencoded Glyphs  </title>
+
+<link rel="stylesheet" type="text/css" media="all" href="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/style.css">
+
+
+<link rel="alternate" type="application/rss+xml" title="CJK Type Blog » Feed" href="https://ccjktype.fonts.adobe.com/feed">
+<link rel="alternate" type="application/rss+xml" title="CJK Type Blog » Comments Feed" href="https://ccjktype.fonts.adobe.com/comments/feed">
+<link rel="stylesheet" id="wp-block-library-css" href="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/style.min.css" type="text/css" media="all">
+
+
+<link rel="prev" title="From The Archives: JIS2004 CMap Resource History" href="https://ccjktype.fonts.adobe.com/2014/03/jis2004-cmap-history.html">
+<link rel="next" title="China’s 通用规范汉字表 (Tōngyòng Guīfàn Hànzìbiǎo)" href="https://ccjktype.fonts.adobe.com/2014/03/china-8105.html">
+<link rel="canonical" href="https://ccjktype.fonts.adobe.com/2014/03/ids-opentype.html">
+
+<link rel="alternate" type="application/json+oembed" href="https://ccjktype.fonts.adobe.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fccjktype.fonts.adobe.com%2F2014%2F03%2Fids-opentype.html">
+<link rel="alternate" type="text/xml+oembed" href="https://ccjktype.fonts.adobe.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fccjktype.fonts.adobe.com%2F2014%2F03%2Fids-opentype.html&amp;format=xml">
+	
+
+
+
+<style>.tk-adobe-clean-han-japanese{font-family:"adobe-clean-han-japanese",sans-serif;}</style></head>
+
+<body class="post-template-default single single-post postid-3147 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="header-top">
+			<div id="adobe-icon"><a href="http://www.adobe.com/"><img src="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/vertical_logo.png" width="60px" height="72px" style="margin-left: -12px; max-width: 60px !important;" alt="Adobe" class="logo"></a></div>		
+			<div class="clear"></div>
+		</div>
+		
+		
+		<h1 id="site-title">					
+			<a href="https://ccjktype.fonts.adobe.com/" title="CJK Type Blog" rel="home">CJK Type Blog</a>					
+		</h1>		
+		
+		<h3 id="site-description">CJK Fonts, Character Sets &amp; Encodings.</h3>		
+			
+	</div>
+
+	<div id="main">	<div id="breadcrumb">
+		<a href="https://ccjktype.fonts.adobe.com/">HOME</a> <span>&gt;</span> IDS + OpenType: Pseudo-encoding Unencoded Glyphs 
+		<div class="clear"></div>
+	</div>
+	<div id="container">
+		<div id="content" role="main">
+		<h2 class="entry-title">IDS + OpenType: Pseudo-encoding Unencoded Glyphs</h2>
+			<div id="post-3147" class="post-3147 post type-post status-publish format-standard hentry category-building-fonts category-standards category-unicode category-using-fonts">	
+		<div class="entry-content">
+			<p><img src="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/biang-six-weights.jpg" alt=""><br>
+For those who are not aware, there are twelve IDCs (<em>Ideographic Description Characters</em>) in Unicode, <a href="http://www.unicode.org/charts/PDF/U2FF0.pdf" target="_blank" rel="noopener noreferrer">from U+2FF0 through U+2FFB</a>, that are used in IDSes (<em>Ideographic Description Sequences</em>) which are intended to visually describe the structure of ideographs by enumerating their components and arrangement in a hierarchical fashion. Any Unicode character can serve as a IDS component, and the IDCs describe their arrangement. The <a href="http://appsrv.cse.cuhk.edu.hk/~irg/" target="_blank" rel="noopener noreferrer">IRG</a> uses IDSes as a way to detect potentially duplicate characters in new submissions. All existing CJK Unified Ideographs have an IDS, and new submissions require an IDS.</p>
+<p>This article describes a technique that uses IDSes combined with OpenType functionality to pseudo-encode glyphs that are unencoded or not yet encoded. If memory serves, it was <a href="https://twitter.com/kawabata" target="_blank" rel="noopener noreferrer">Taichi KAWABATA (<span lang="ja-jp">川幡太一</span>)</a> who originally suggested this technique.<br>
+<span id="more-3147"></span><br>
+For people and organizations who have a need to use glyphs that are not encoded—or glyphs that are not yet encoded because they are currently <a href="http://www.unicode.org/alloc/Pipeline.html" target="_blank" rel="noopener noreferrer">in the pipeline</a> to be encoded—IDSes can serve as an extraordinarily convenient stopgap measure for pseudo-encoding such glyphs in order to make them immediately usable. Of course, an IDS in and of itself does not have enough information to dynamically compose the glyph to which it corresponds, but a pre-composed glyph can be used as the substitute for an IDS. Furthermore, because IDSes are <em>plain text</em>, when the glyphs that they represent become encoded in a future version of Unicode, their plain-text sequences can be easily converted into the genuine code points for the corresponding characters.</p>
+<p>The technique is to use an OpenType feature that converts a sequence of glyphs into a single glyph. The sequence, of course, is an IDS, and the single glyph is a pre-composed form of the intended glyph that corresponds to the IDS.</p>
+<p>There are two caveats to the approach of using IDSes to pseudo-encode glyphs:</p>
+<ul>
+<li>Glyphs for all of the necessary IDCs and components must be contained in the same font resource as the glyphs that the corresponding IDSes represent.</li>
+<li>The application must support the ‘<a href="http://www.microsoft.com/typography/otspec/features_ae.htm#ccmp" target="_blank" rel="noopener noreferrer">ccmp</a>‘ (<em>Glyph Composition/Decomposition</em>) GSUB feature. An alternative is to use the ‘<a href="http://www.microsoft.com/typography/otspec/features_ko.htm#liga" target="_blank" rel="noopener noreferrer">liga</a>‘ (<em>Standard Ligatures</em>) GSUB feature, which is arguably more broadly supported, but can be toggled on and off.</li>
+</ul>
+<p>To exemplify this technique, we will pseudo-encoded the Japanese form of the not-yet-encoded <a href="http://en.wikipedia.org/wiki/Biangbiang_noodles" target="_blank" rel="noopener noreferrer"><em>biáng</em></a> character by building a small <a href="http://blogs.adobe.com/CCJKType/2012/05/sp-ai0-ros.html" target="_blank" rel="noopener noreferrer">Adobe-Identity-O ROS</a> CID-keyed OpenType/CFF font. This character’s IDS is <span lang="ja-jp">⿺辶⿳穴⿰月⿰⿲⿱幺長⿱言馬⿱幺長刂心</span>, and requires five different IDCs (<span lang="ja-jp">⿰⿱⿲⿳⿺</span>) and nine different components (<span lang="ja-jp">刂幺心月穴言辶長馬</span>). The <em>tx</em>-generated glyph synopsis below shows the five IDCs at CIDs 2 through 6, the nine components at CIDs 7 through 15, and the pre-composed glyph at CID+16 (<em>click on the image to view a larger version</em>):</p>
+<p><a href="https://ccjktype.fonts.adobe.com/wp-content/uploads/2014/03/ids-glyphs-1800.jpg"><img src="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/ids-glyphs.jpg"></a></p>
+<p>Below are the mappings that are used in the CMap resource that is used:</p>
+<table id="mappings" style="padding: 7px;background-color: #e8e8e8" width="25%" border="0" cellspacing="0">
+<tbody>
+<tr>
+<th style="width:100px;padding: 10px;background-color: #f5f5f5;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6" align="left">Unicode</th>
+<th style="width:100px;padding: 10px;background-color: #f5f5f5;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6" align="left">CID</th>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+0020 (<span lang="ja-jp"> </span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">1</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+2FF0 (<span lang="ja-jp">⿰</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">2</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+2FF1 (<span lang="ja-jp">⿱</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">3</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+2FF2 (<span lang="ja-jp">⿲</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">4</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+2FF3 (<span lang="ja-jp">⿳</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">5</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+2FFA (<span lang="ja-jp">⿺</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">6</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+5202 (<span lang="ja-jp">刂</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">7</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+5E7A (<span lang="ja-jp">幺</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">8</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+5FC3 (<span lang="ja-jp">心</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">9</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+6708 (<span lang="ja-jp">月</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">10</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+7A74 (<span lang="ja-jp">穴</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">11</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+8A00 (<span lang="ja-jp">言</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">12</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+8FB6 (<span lang="ja-jp">辶</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">13</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+9577 (<span lang="ja-jp">長</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">14</td>
+</tr>
+<tr style="background-color: #fff">
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">U+99AC (<span lang="ja-jp">馬</span>)</td>
+<td style="font-size:18px;padding: 10px;border-left: 1px solid #C6C6C6;border-top: 1px solid #C6C6C6;border-bottom: 1px solid #C6C6C6" align="left">15</td>
+</tr>
+</tbody>
+</table>
+<p>Of course, CID+16 is not shown in the above table because it is unencoded. ☺</p>
+<p>Below is the ‘ccmp’ GSUB feature definition that is used in the <em>features</em> file:</p>
+<p><code>feature ccmp {<br>
+&nbsp;&nbsp;substitute \6 \13 \5 \11 \2 \10 \2 \4 \3 \8 \14 \3 \12 \15 \3 \8 \14 \7 \9 by \16;<br>
+} ccmp;</code></p>
+<p>If you wish to invoke this glyph via the ‘liga’ GSUB feature, either in lieu of or in addition to the ‘ccmp’ feature, simply clone the above and change the two instances of the feature tag accordingly.</p>
+<p>For those who’d like to use this font, you can <a href="http://blogs.adobe.com/CCJKType/files/2014/03/Biang-Heavy.otf" target="_blank" rel="noopener noreferrer">download and install the Heavy version</a>. For those who would like to look at the source files, they are <a href="https://ccjktype.fonts.adobe.com/wp-content/uploads/2014/03/Biang-Heavy.zip" target="_blank" rel="noopener noreferrer">available for download</a>.</p>
+<p>Enjoy!</p>
+					</div>		
+	</div>	
+	
+			<div id="comments">
+
+
+	<p class="nocomments">Comments are closed.</p>
+
+
+<style>
+#commentform  p.cptch_block {
+	color: #999999;
+	font-size: 12px;
+}
+</style>
+
+</div>
+		</div>
+	</div>
+	
+	
+	<div id="primary">
+		<h3 class="entry-header">By 
+		Dr. Ken Lunde</h3>		
+
+				
+		<h3 class="entry-header"><img align="absbottom" src="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/comment-icon.png"> &nbsp;Comments <span><a href="https://ccjktype.fonts.adobe.com/2014/03/ids-opentype.html#comments">(0)</a></span></h3>		
+
+		<h3 class="entry-header no-margin">Created</h3>
+		<div class="entry-left-text">March 24, 2014</div>
+
+	</div>
+	
+		<div class="clear"></div>
+	</div>
+	<div class="clearfooter"></div>	
+</div>
+<div id="footer-wrapper">
+			<div id="footer" role="contentinfo">
+		<div id="footer-inner">
+			<div id="footer-nav">
+				<div class="menu-footer">
+					<ul id="menu-footer-nav" class="menu">
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/careers.html">Careers</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/misc/agreement.html">Permissions &amp; Trademarks</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/products/eulas/">EULAs</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/antipiracy.html">Report Piracy</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/aboutadobe/contact.html">Contact Adobe</a></li>
+					</ul>
+				</div>				
+				<div class="clear"></div>
+			</div>			
+			<div id="copy-right">
+				<p class="copy-right">Copyright © 2020 Adobe Systems Incorporated.  All rights reserved.</p>
+				<p class="terms"><a href="http://www.adobe.com/misc/copyright.html">Terms of Use</a> | <a href="http://adobe.com/privacy" class="cookie-config">Privacy Policy and Cookies</a> <span style="color:red;">(Updated)</span></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">_satellite.pageBottom();</script>
+
+
+<script src="./IDS + OpenType_ Pseudo-encoding Unencoded Glyphs_files/yco1ynr.js.下载"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<style type="text/css">
+
+body, #header h1, #content h2, #content h3 {
+	font-family: 'adobe-clean-han-japanese', sans-serif;
+	-moz-font-feature-settings: "locl";
+	-webkit-font-feature-settings: "locl";
+	font-feature-settings: "locl";
+}
+</style>
+
+
+
+
+
+
+</body></html>

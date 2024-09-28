@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://ccjktype.fonts.adobe.com/2013/06/ai0-and-heuristics.html -->
+<html lang="en-US" class=" wf-adobe-clean-han-japanese-n9-active wf-adobe-clean-han-japanese-n5-active wf-adobe-clean-han-japanese-n7-active wf-adobe-clean-han-japanese-n1-active wf-adobe-clean-han-japanese-n2-active wf-adobe-clean-han-japanese-n3-active wf-adobe-clean-han-japanese-n4-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="serp-content-type" content="blog">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Adobe-Identity-0 ROS &amp; Heuristics  </title>
+
+<link rel="stylesheet" type="text/css" media="all" href="./The Adobe-Identity-0 ROS &amp; Heuristics_files/style.css">
+
+
+<link rel="alternate" type="application/rss+xml" title="CJK Type Blog » Feed" href="https://ccjktype.fonts.adobe.com/feed">
+<link rel="alternate" type="application/rss+xml" title="CJK Type Blog » Comments Feed" href="https://ccjktype.fonts.adobe.com/comments/feed">
+<link rel="stylesheet" id="wp-block-library-css" href="./The Adobe-Identity-0 ROS &amp; Heuristics_files/style.min.css" type="text/css" media="all">
+
+
+<link rel="prev" title="Font Development Via Unicode" href="https://ccjktype.fonts.adobe.com/2013/06/font-development-via-unicode.html">
+<link rel="next" title="Some initial Adobe-Japan1-6 versus UTR #50 thoughts…" href="https://ccjktype.fonts.adobe.com/2013/08/some_initial-aj16-vs-utr50-thoughts.html">
+<link rel="canonical" href="https://ccjktype.fonts.adobe.com/2013/06/ai0-and-heuristics.html">
+
+<link rel="alternate" type="application/json+oembed" href="https://ccjktype.fonts.adobe.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fccjktype.fonts.adobe.com%2F2013%2F06%2Fai0-and-heuristics.html">
+<link rel="alternate" type="text/xml+oembed" href="https://ccjktype.fonts.adobe.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fccjktype.fonts.adobe.com%2F2013%2F06%2Fai0-and-heuristics.html&amp;format=xml">
+	
+
+
+
+<style>.tk-adobe-clean-han-japanese{font-family:"adobe-clean-han-japanese",sans-serif;}</style></head>
+
+<body class="post-template-default single single-post postid-2786 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="header-top">
+			<div id="adobe-icon"><a href="http://www.adobe.com/"><img src="./The Adobe-Identity-0 ROS &amp; Heuristics_files/vertical_logo.png" width="60px" height="72px" style="margin-left: -12px; max-width: 60px !important;" alt="Adobe" class="logo"></a></div>		
+			<div class="clear"></div>
+		</div>
+		
+		
+		<h1 id="site-title">					
+			<a href="https://ccjktype.fonts.adobe.com/" title="CJK Type Blog" rel="home">CJK Type Blog</a>					
+		</h1>		
+		
+		<h3 id="site-description">CJK Fonts, Character Sets &amp; Encodings.</h3>		
+			
+	</div>
+
+	<div id="main">	<div id="breadcrumb">
+		<a href="https://ccjktype.fonts.adobe.com/">HOME</a> <span>&gt;</span> The Adobe-Identity-0 ROS &amp; Heuristics 
+		<div class="clear"></div>
+	</div>
+	<div id="container">
+		<div id="content" role="main">
+		<h2 class="entry-title">The Adobe-Identity-0 ROS &amp; Heuristics</h2>
+			<div id="post-2786" class="post-2786 post type-post status-publish format-standard hentry category-building-fonts category-unicode">	
+		<div class="entry-content">
+			<p>I have advocated the use of the special-purpose and language-neutral Adobe-Identity-0 ROS over the past few years, and have developed several CID-keyed fonts that take advantage of this ROS, but keep in mind that its use can act like a double-edge sword.</p>
+<p>On one hand, it provides font developers with great flexibility, in terms of the glyph complement of a font. In other words, font developers need not be restricted to one of our public CJK ROSes, such as <a href="http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/font/pdfs/5078.Adobe-Japan1-6.pdf" target="_blank" rel="noopener noreferrer">Adobe-Japan1-6</a>, or a subset thereof. <a href="http://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-US&amp;event=displayFont&amp;code=KOZK10005000" target="_blank" rel="noopener noreferrer">Kazuraki</a> is an example of a Japanese font whose glyph set requirements didn’t fit Adobe-Japan1-6, so the Adobe-Identity-0 ROS was used.</p>
+<p>On the other hand, font developers need to develop all of the necessary resources, such as the UTF-32 CMap Resource that is used as the basis of the ‘<a href="http://www.microsoft.com/typography/otspec/cmap.htm" target="_blank" rel="noopener noreferrer">cmap</a>‘ table, which maps Unicode code points to glyphs in the font, along with any GSUB <a href="http://www.microsoft.com/typography/otspec/featuretags.htm" target="_blank" rel="noopener noreferrer">features</a>. In addition, and because the Adobe-Identity-0 ROS is language-neutral in that its designation does not specify or suggest a primary language, some applications may incorrectly assign a primary language to such fonts. This, of course, is due to <em>heuristics</em> (<span lang="ja-jp">発見的教授法</span> in Japanese), or more specifically, their failure.<br>
+<span id="more-2786"></span><br>
+In my experience, there are several ways that the font developer can help applications that are heuristic-driven, in order to provide them with enough information to correctly identify the primary language of an Adobe-Identity-0 font. These are listed below:</p>
+<ul>
+<li>Populate the ‘<a href="http://www.microsoft.com/typography/otspec/name.htm" target="_blank" rel="noopener noreferrer">name</a>‘ table with strings that are tagged with the primary language of the font. In the case of Kazuraki, Japanese-language strings, including those for the name of the font that are to be used in application font menus, were specified in its ‘name’ table.</li>
+<li>Although Adobe-Identity-0 ROS fonts do not require a Macintosh (pre–OS X) ‘cmap’ subtable, the <a href="http://www.adobe.com/devnet/opentype/afdko.html" target="_blank" rel="noopener noreferrer">AFDKO</a> <em>makeotf</em> tool creates a “stub” one, meaning that it exists, but includes no usable mappings. The makeotf “-cs” option can be used to specify a Macintosh ScriptID as its argument, and specifying the appropriate value can help some applications. Suitable values include 1 (Japanese), 2 (Traditional Chinese), 3 (Korean), and 25 (Simplified Chinese).</li>
+<li>Manually set the ‘<a href="http://www.microsoft.com/typography/otspec/os2.htm" target="_blank" rel="noopener noreferrer">OS/2</a>‘ table’s “UnicodeRange” and “CodePageRange” bits. This is especially important if the glyph complement does not trigger heuristics in <em>makeotf</em> to set specific bits that indicate that a particular Unicode block or legacy Code Page is intended to be supported, even if partially.</li>
+</ul>
+<p>Of course, in addition to the above suggestions, adequate testing in real-world environments is important, which can help determine the extent to which a particular font is being treated appropriately by an application.</p>
+					</div>		
+	</div>	
+	
+			<div id="comments">
+
+
+	<p class="nocomments">Comments are closed.</p>
+
+
+<style>
+#commentform  p.cptch_block {
+	color: #999999;
+	font-size: 12px;
+}
+</style>
+
+</div>
+		</div>
+	</div>
+	
+	
+	<div id="primary">
+		<h3 class="entry-header">By 
+		Dr. Ken Lunde</h3>		
+
+				
+		<h3 class="entry-header"><img align="absbottom" src="./The Adobe-Identity-0 ROS &amp; Heuristics_files/comment-icon.png"> &nbsp;Comments <span><a href="https://ccjktype.fonts.adobe.com/2013/06/ai0-and-heuristics.html#comments">(0)</a></span></h3>		
+
+		<h3 class="entry-header no-margin">Created</h3>
+		<div class="entry-left-text">June 23, 2013</div>
+
+	</div>
+	
+		<div class="clear"></div>
+	</div>
+	<div class="clearfooter"></div>	
+</div>
+<div id="footer-wrapper">
+			<div id="footer" role="contentinfo">
+		<div id="footer-inner">
+			<div id="footer-nav">
+				<div class="menu-footer">
+					<ul id="menu-footer-nav" class="menu">
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/careers.html">Careers</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/misc/agreement.html">Permissions &amp; Trademarks</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/products/eulas/">EULAs</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/antipiracy.html">Report Piracy</a></li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/aboutadobe/contact.html">Contact Adobe</a></li>
+					</ul>
+				</div>				
+				<div class="clear"></div>
+			</div>			
+			<div id="copy-right">
+				<p class="copy-right">Copyright © 2020 Adobe Systems Incorporated.  All rights reserved.</p>
+				<p class="terms"><a href="http://www.adobe.com/misc/copyright.html">Terms of Use</a> | <a href="http://adobe.com/privacy" class="cookie-config">Privacy Policy and Cookies</a> <span style="color:red;">(Updated)</span></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">_satellite.pageBottom();</script>
+
+
+<script src="./The Adobe-Identity-0 ROS &amp; Heuristics_files/yco1ynr.js.下载"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<style type="text/css">
+
+body, #header h1, #content h2, #content h3 {
+	font-family: 'adobe-clean-han-japanese', sans-serif;
+	-moz-font-feature-settings: "locl";
+	-webkit-font-feature-settings: "locl";
+	font-feature-settings: "locl";
+}
+</style>
+
+
+
+
+
+
+</body></html>
